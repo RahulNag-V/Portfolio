@@ -1,378 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>|| A Gate ||</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Rahul Nag V" />
+    <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon" />
+    <title>|| A GateWay to My Profile's ||</title>
 
-<style>
-:root{
---primary:#E7F0FA;
---secondary:#7BA4D0;
---accent:#2E5E99;
---text:#0D2440;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:system-ui,serif;
-}
-
-html,body{
-width:100%;
-height:100%;
-}
-
-body{
-background:radial-gradient(circle at top,#7BA4D0,#E7F0FA);
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-color:var(--text);
-}
-
-.hero{
-width:100%;
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-position: relative;
-/* gap:80px; */
-/* padding:0 20px; */
-}
-
-.hero-left{
-    flex:1;
-}
-
-.hero-right{
-    position: absolute;
-    top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-flex:1;
-max-width:600px;
-background: transparent;
-}
-
-h1{
-    position:relative;
-    transform-style:preserve-3d;
-    animation:slideDown 1s ease forwards;
-  font-size:3rem;
-  font-weight:900;
-  perspective:1000px;
-    position:relative;
-  display:inline-block;
-}
-
-h1 span{
-  display:inline-block;
-  background:
-    linear-gradient(
-      120deg,
-      #f8f9fa 0%,
-      #cfd4da 18%,
-      #ffffff 30%,
-      #9aa3ad 45%,
-      #f1f3f5 60%,
-      #7a8594 75%,
-      #ffffff 100%
-    );
-  background-size:300% 300%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-
-  transform:translateZ(35px);
-  animation:liquidChrome 6s ease-in-out infinite;
-
-  text-shadow:
-    1px 1px 0 rgba(0,0,0,0.2),
-    2px 2px 0 rgba(0,0,0,0.2),
-    4px 4px 8px rgba(0,0,0,0.4),
-    0 0 20px rgba(255,255,255,0.15);
-}
-@keyframes liquidChrome{
-  0%{
-    background-position:0% 50%;
-  }
-  50%{
-    background-position:100% 50%;
-  }
-  100%{
-    background-position:0% 50%;
-  }
-}
-h1 span::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-8px;
-  transform:translateX(-50%);
-  width:80%;
-  height:3px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.411),
-    transparent
-  );
-  border-radius:2px;
-}
-
-h2{
-margin-top:10px;
-font-weight:500;
-opacity:0;
-animation:slideUp 1s ease forwards;
-animation-delay:.3s;
-}
-
-p{
-margin-top:10px;
-opacity:0;
-animation:slideUp 1s ease forwards;
-animation-delay:.6s;
-}
-
-.cards{
-display:flex;
-gap:30px;
-margin-top:50px;
-opacity:0;
-animation:slideUp 1s ease forwards;
-animation-delay:.9s;
-}
-
-.card{
-width:220px;
-border-radius:18px;
-padding:16px;
-background:rgba(255, 255, 255, 0.738);
-backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.35);
-box-shadow:0 20px 40px rgba(46,94,153,.25);
-transition:
-transform .35s ease,
-box-shadow .35s ease,
-background .35s ease,
-filter .35s ease,
-opacity .35s ease;
-transform-style:preserve-3d;
-cursor:pointer;
-}
-
-.card img{
-width:100%;
-border-radius:14px;
-}
-
-.card p{
-margin:14px 0;
-font-size:.9rem;
-opacity:.85;
-}
-
-.card button{
-width:100%;
-padding:10px;
-border:none;
-border-radius:10px;
-background:linear-gradient(135deg,var(--secondary),var(--accent));
-color:white;
-font-weight:600;
-cursor:pointer;
-transition:transform .15s ease,box-shadow .15s ease;
-}
-
-.card button:active{
-transform:scale(.92);
-box-shadow:0 6px 15px rgba(46,94,153,.45) inset;
-}
-
-.card:hover{
-background:linear-gradient(135deg,#ffffff,var(--primary));
-box-shadow:0 30px 70px rgba(46,94,153,.45);
-transform:scale(1.08);
-z-index:5;
-}
-
-.cards.dim .card{
-filter:blur(0px);
-opacity:.45;
-transform:scale(.96);
-}
-
-.cards.dim .card.active{
-filter:blur(0);
-opacity:1;
-transform:scale(1.08);
-}
-
-@keyframes slideDown{
-from{opacity:0;transform:translateY(-40px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes slideUp{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
-}
-.balls-section{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-  perspective:1000px;
-  /* background:radial-gradient(circle at top, #0b1229, #020617); */
-}
-
-.balls-scene{
-  position:relative;
-  width:100%;
-  height:100%;
-  transform-style:preserve-3d;
-}
-
-.balls-scene .ball{
-  position:absolute;
-  border-radius:50%;
-  transform-style:preserve-3d;
-}
-
-.balls-scene .ball::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), transparent 60%);
-}
-
-.balls-scene .ball::after{
-  content:"";
-  position:absolute;
-  inset:12%;
-  border-radius:50%;
-  background:radial-gradient(circle at bottom, rgba(0,0,0,0.4), transparent 70%);
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="hero">
-<div class="hero-left">
-    <div class="balls-section">
-  <div class="balls-scene" id="ballsScene"></div>
-</div>
-</div>
-
-<div class="hero-right">
-<h1>Hello, I’m <span>Rahul Nag V</span></h1>
-<h2>Frontend Developer & Problem Solver</h2>
-<p>Select a viewing mode to explore my portfolio.</p>
-
-<div class="cards">
-<div class="card">
-<img src="8161638.jpg">
-<p>Explore my portfolio through a clean, modern, and visual interface.</p>
-<button>Explore Standard View →</button>
-</div>
-
-<div class="card">
-<img src="8161638.jpg">
-<p>Navigate my portfolio through a terminal-style, developer-focused experience.</p>
-<button>Explore Terminal View →</button>
-</div>
-</div>
-</div>
-</div>
-
-<script>
-const cards=document.querySelectorAll(".card")
-const container=document.querySelector(".cards")
-
-cards.forEach(card=>{
-card.addEventListener("mouseenter",()=>{
-container.classList.add("dim")
-card.classList.add("active")
-})
-
-card.addEventListener("mousemove",e=>{
-const r=card.getBoundingClientRect()
-const x=e.clientX-r.left
-const y=e.clientY-r.top
-const rx=(y-r.height/2)/14
-const ry=(x-r.width/2)/14
-card.style.transform=`scale(1.08) rotateX(${-rx}deg) rotateY(${ry}deg)`
-})
-
-card.addEventListener("mouseleave",()=>{
-container.classList.remove("dim")
-card.classList.remove("active")
-card.style.transform="scale(1)"
-})
-})
-const scene = document.getElementById("ballsScene")
-const BALLS = 25
-const balls = []
-
-for(let i=0;i<BALLS;i++){
-  const el = document.createElement("div")
-  const size = Math.random()*80 + 40
-  const z = Math.random()*600 - 300
-
-  el.className = "ball"
-  el.style.width = size+"px"
-  el.style.height = size+"px"
-  el.style.background = `radial-gradient(circle at top left,
-    hsl(${Math.random()*360},70%,70%),
-    hsl(${Math.random()*360},70%,40%))`
-
-  scene.appendChild(el)
-
-  balls.push({
-    el,
-    x: Math.random()*innerWidth,
-    y: Math.random()*innerHeight,
-    z,
-    vx:(Math.random()-0.5)*0.6,
-    vy:(Math.random()-0.5)*0.6
-  })
-}
-
-function animateBalls(){
-  balls.forEach(b=>{
-    b.x += b.vx
-    b.y += b.vy
-
-    if(b.x<0||b.x>innerWidth) b.vx*=-1
-    if(b.y<0||b.y>innerHeight) b.vy*=-1
-
-    b.el.style.transform =
-      `translate3d(${b.x}px,${b.y}px,${b.z}px)`
-  })
-  requestAnimationFrame(animateBalls)
-}
-animateBalls()
-
-window.addEventListener("mousemove",e=>{
-  const rx = (e.clientY/innerHeight -.5) * -20
-  const ry = (e.clientX/innerWidth - .5) * 20
-  scene.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`
-})
-
-</script>
-
-</body>
+    <style>
+      :root {
+        --primary: #e7f0fa;
+        --secondary: #7ba4d0;
+        --accent: #2e5e99;
+        --text: #0d2440;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, serif;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        background: radial-gradient(circle at top, #7ba4d0, #e7f0fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: var(--text);
+        cursor: none;
+      }
+      .hero {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .hero-left {
+        flex: 1;
+      }
+      .hero-right {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex: 1;
+        max-width: 600px;
+        background: transparent;
+      }
+      h1 {
+        position: relative;
+        transform-style: preserve-3d;
+        animation: slideDown 1s ease forwards;
+        font-size: 3rem;
+        font-weight: 900;
+        perspective: 1000px;
+        position: relative;
+        display: inline-block;
+      }
+      h1 span {
+        display: inline-block;
+        background: linear-gradient(
+          120deg,
+          #f8f9fa 0%,
+          #cfd4da 18%,
+          #ffffff 30%,
+          #9aa3ad 45%,
+          #f1f3f5 60%,
+          #7a8594 75%,
+          #ffffff 100%
+        );
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        transform: translateZ(35px);
+        animation: liquidChrome 6s ease-in-out infinite;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2), 2px 2px 0 rgba(0, 0, 0, 0.2),
+          4px 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.15);
+      }
+      @keyframes liquidChrome {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      h1 span::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 0, 0, 0.411),
+          transparent
+        );
+        border-radius: 2px;
+      }
+      h2 {
+        margin-top: 10px;
+        font-weight: 500;
+        opacity: 0;
+        animation: slideUp 1s ease forwards;
+        animation-delay: 0.3s;
+      }
+      p {
+        margin-top: 10px;
+        opacity: 0;
+        animation: slideUp 1s ease forwards;
+        animation-delay: 0.6s;
+      }
+      .cards {
+        display: flex;
+        gap: 30px;
+        margin-top: 50px;
+        opacity: 0;
+        animation: slideUp 1s ease forwards;
+        animation-delay: 0.9s;
+      }
+      .card {
+        width: 220px;
+        border-radius: 18px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.738);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 20px 40px rgba(46, 94, 153, 0.25);
+        transition: transform 0.35s ease, box-shadow 0.35s ease,
+          background 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
+        transform-style: preserve-3d;
+        cursor: none;
+      }
+      .card img {
+        width: 100%;
+        border-radius: 14px;
+      }
+      .card p {
+        margin: 14px 0;
+        font-size: 0.9rem;
+        opacity: 0.85;
+      }
+      .card button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .card button:active {
+        transform: scale(0.92);
+        box-shadow: 0 6px 15px rgba(46, 94, 153, 0.45) inset;
+      }
+      .card:hover {
+        background: linear-gradient(135deg, #ffffff, var(--primary));
+        box-shadow: 0 30px 70px rgba(46, 94, 153, 0.45);
+        transform: scale(1.08);
+        z-index: 5;
+      }
+      .cards.dim .card {
+        filter: blur(0px);
+        opacity: 0.45;
+        transform: scale(0.96);
+      }
+      .cards.dim .card.active {
+        filter: blur(0);
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .balls-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        perspective: 1000px;
+      }
+      .balls-scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+      }
+      .balls-scene .ball {
+        position: absolute;
+        border-radius: 50%;
+        transform-style: preserve-3d;
+      }
+      .balls-scene .ball::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, 0.9),
+          transparent 60%
+        );
+      }
+      .balls-scene .ball::after {
+        content: "";
+        position: absolute;
+        inset: 12%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at bottom,
+          rgba(0, 0, 0, 0.4),
+          transparent 70%
+        );
+      }
+      #cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        pointer-events: none;
+        z-index: 1000;
+        transform: translate(-50%, -50%);
+      }
+      #cursor .dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        background: rgb(0, 0, 0);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cursor">
+      <span class="dot"></span>
+    </div>
+    <div class="hero">
+      <div class="hero-left">
+        <div class="balls-section">
+          <div class="balls-scene" id="ballsScene"></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <h1>Hello, I'm <span>Rahul Nag V</span></h1>
+        <h2>Frontend Developer & Problem Solver</h2>
+        <p>Select a viewing mode to explore my portfolio.</p>
+        <div class="cards">
+          <div class="card">
+            <img src="8161638.jpg" />
+            <p>
+              Explore my portfolio through a clean, modern, and visual
+              interface.
+            </p>
+            <button id="standard">Explore Standard View →</button>
+          </div>
+          <div class="card">
+            <img src="8161638.jpg" />
+            <p>
+              Navigate my portfolio through a terminal-style, developer-focused
+              experience.
+            </p>
+            <button id="terminal">Explore Terminal View →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const cards = document.querySelectorAll(".card");
+      const container = document.querySelector(".cards");
+      cards.forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          container.classList.add("dim");
+          card.classList.add("active");
+        });
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          const rx = (y - r.height / 2) / 14;
+          const ry = (x - r.width / 2) / 14;
+          card.style.transform = `scale(1.08) rotateX(${-rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener("mouseleave", () => {
+          container.classList.remove("dim");
+          card.classList.remove("active");
+          card.style.transform = "scale(1)";
+        });
+      });
+      const scene = document.getElementById("ballsScene");
+      const BALLS = 25;
+      const balls = [];
+      for (let i = 0; i < BALLS; i++) {
+        const el = document.createElement("div");
+        const size = Math.random() * 80 + 40;
+        const z = Math.random() * 600 - 300;
+        el.className = "ball";
+        el.style.width = size + "px";
+        el.style.height = size + "px";
+        el.style.background = `radial-gradient(circle at top left,
+    hsl(${Math.random() * 360},70%,70%),
+    hsl(${Math.random() * 360},70%,40%))`;
+        scene.appendChild(el);
+        balls.push({
+          el,
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          z,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+        });
+      }
+      function animateBalls() {
+        balls.forEach((b) => {
+          b.x += b.vx;
+          b.y += b.vy;
+          if (b.x < 0 || b.x > innerWidth) b.vx *= -1;
+          if (b.y < 0 || b.y > innerHeight) b.vy *= -1;
+          b.el.style.transform = `translate3d(${b.x}px,${b.y}px,${b.z}px)`;
+        });
+        requestAnimationFrame(animateBalls);
+      }
+      animateBalls();
+      window.addEventListener("mousemove", (e) => {
+        const rx = (e.clientY / innerHeight - 0.5) * -20;
+        const ry = (e.clientX / innerWidth - 0.5) * 20;
+        scene.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / innerWidth - 0.5) * 20;
+        const y = (e.clientY / innerHeight - 0.5) * 20;
+        mouse.style.transform = `translate(-50%, -50%) rotateX(${-y}deg) rotateY(${x}deg)`;
+      });
+      const cursor = document.querySelector("#cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      });
+      let x = 0,
+        y = 0;
+      document.addEventListener("mousemove", (e) => {
+        x = e.clientX;
+        y = e.clientY;
+      });
+      function loop() {
+        cursor.style.left = x + "px";
+        cursor.style.top = y + "px";
+        requestAnimationFrame(loop);
+      }
+      loop();
+      let standard = document.querySelector("#standard");
+      let terminal = document.querySelector("#terminal");
+      standard.addEventListener("click", () => {
+        window.open("Normal_page/index.html", "_blank");
+      });
+      terminal.addEventListener("click", () => {
+        window.open("Terminal_Based/terminal.html", "_blank");
+      });
+    </script>
+  </body>
 </html>
