@@ -1,0 +1,53 @@
+/* Remove default spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full page setup */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: #00ff9c; /* terminal green */
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+}
+
+/* Boot screen covers entire page */
+#boot-screen {
+    width: 100%;
+    position: fixed; /* stays on top */
+    inset: 0; /* top, right, bottom, left = 0 */
+    background: black;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+/* Terminal text styling */
+#boot-text {
+    font-size: 14px;
+    line-height: 1.5;
+    /* white-space: pre-wrap; */
+     /* wrap long lines */
+}
+
+/* Main content hidden initially */
+#main-content {
+    display: none; /* shown later via JS */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: radial-gradient(circle at center, #0f172a, #020617);
+}
+
+/* Simple heading style */
+#main-content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
