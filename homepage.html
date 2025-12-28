@@ -54,20 +54,79 @@ position: relative;
     top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 flex:1;
-max-width:520px;
+max-width:600px;
 background: transparent;
 }
 
 h1{
-font-size:3rem;
-animation:slideDown 1s ease forwards;
+    position:relative;
+    transform-style:preserve-3d;
+    animation:slideDown 1s ease forwards;
+  font-size:3rem;
+  font-weight:900;
+  perspective:1000px;
+    position:relative;
+  display:inline-block;
 }
 
 h1 span{
-background:linear-gradient(135deg,var(--accent),#141E30);
--webkit-background-clip:text;
-color:transparent;
+  display:inline-block;
+  background:
+    linear-gradient(
+      120deg,
+      #f8f9fa 0%,
+      #cfd4da 18%,
+      #ffffff 30%,
+      #9aa3ad 45%,
+      #f1f3f5 60%,
+      #7a8594 75%,
+      #ffffff 100%
+    );
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  transform:translateZ(35px);
+  animation:liquidChrome 6s ease-in-out infinite;
+
+  text-shadow:
+    1px 1px 0 rgba(0,0,0,0.2),
+    2px 2px 0 rgba(0,0,0,0.2),
+    4px 4px 8px rgba(0,0,0,0.4),
+    0 0 20px rgba(255,255,255,0.15);
+}
+@keyframes liquidChrome{
+  0%{
+    background-position:0% 50%;
+  }
+  50%{
+    background-position:100% 50%;
+  }
+  100%{
+    background-position:0% 50%;
+  }
+}
+h1 span::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-8px;
+  transform:translateX(-50%);
+  width:80%;
+  height:3px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.411),
+    transparent
+  );
+  border-radius:2px;
 }
 
 h2{
@@ -98,7 +157,7 @@ animation-delay:.9s;
 width:220px;
 border-radius:18px;
 padding:16px;
-background:rgba(255,255,255,.55);
+background:rgba(255, 255, 255, 0.738);
 backdrop-filter:blur(14px);
 border:1px solid rgba(255,255,255,.35);
 box-shadow:0 20px 40px rgba(46,94,153,.25);
@@ -148,7 +207,7 @@ z-index:5;
 }
 
 .cards.dim .card{
-filter:blur(3px);
+filter:blur(0px);
 opacity:.45;
 transform:scale(.96);
 }
@@ -264,24 +323,6 @@ card.classList.remove("active")
 card.style.transform="scale(1)"
 })
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const scene = document.getElementById("ballsScene")
 const BALLS = 25
 const balls = []
