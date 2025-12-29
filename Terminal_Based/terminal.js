@@ -1,64 +1,57 @@
-// Select the boot text area
-const bootText = document.getElementById("boot-text");
+/* ================= BOOT SEQUENCE ================= */
 
-// Select screens
+const bootText = document.getElementById("boot-text");
 const bootScreen = document.getElementById("boot-screen");
 const mainContent = document.getElementById("main-content");
 
-// Characters used to generate random code
-const chars = `xQ7@F$kG}m2%T0<ZJbL5^s8O+YdE]3nP"rH!*C4U?M9lV{&W6=iqK(a_e#1y/DR)f>hS^@pXJm0Y2F!{=6Q$]8A9G7<+R#iL"Z5%P}T*E&cU?K(>sV_4rWnD^bH/O1y)3kM@x9Q5=8T{FLJ6^DRK_&*S+P4mG%!?Y3WCH]O2"0Eri#)bV>1<@k7XAMn(9l5{T}FZ^EJ!W0#yP?i>r2@H+G%O4D8m3&xkN_1Q]6A7C(SB"L=K{YJ}^P*9WZfQ<@xU7C!A]1m_8+5H0L%N&?r3#6(OY^E}4="PD2BViSk>FJ$R)G@<WlZ9x^?}0S#(H1C*+6!NAB8)kL%R&{5=Q_7J3mT"XWi>4E2@ZK`;
+const CHARSET =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-={}[]<>?/|";
 
-// Function to generate one random line
-function generateRandomLine() {
-  let line = "";
+const MIN_LEN = 30;
+const MAX_LEN = 120;
+const MAX_LINES = 120;
+const SPEED = 20;
 
-  // Random line length between 30 and 80
-  let length = Math.floor(Math.random() * 150) + 30;
-
-  // Build the line character by character
-  for (let i = 0; i < length; i++) {
-    line += chars[Math.floor(Math.random() * chars.length)];
+function randomLine() {
+  let len = Math.floor(Math.random() * (MAX_LEN - MIN_LEN)) + MIN_LEN;
+  let out = "";
+  for (let i = 0; i < len; i++) {
+    out += CHARSET[Math.floor(Math.random() * CHARSET.length)];
   }
-
-  return line;
+  return out;
 }
 
-// Function to keep adding random lines
-function startBootSequence() {
-  let linesCount = 0;
+function startBoot() {
+  let lines = 0;
 
-  // Interval runs every 50ms
-  const interval = setInterval(() => {
-    // Add new random line
-    bootText.textContent += generateRandomLine() + "\n";
-
-    linesCount++;
-
-    // Stop after 40 lines
-    if (linesCount > 150) {
-      clearInterval(interval);
-
-      // Wait 1 second, then switch screens
-      setTimeout(showMainPage, 100);
+  const timer = setInterval(() => {
+    bootText.textContent += randomLine() + "\n";
+    if (++lines >= MAX_LINES) {
+      clearInterval(timer);
+      setTimeout(showMain, 200);
     }
-  }, 20);
+  }, SPEED);
 }
 
-// Function to hide boot screen and show main page
-function showMainPage() {
-  bootScreen.style.display = "none"; // hide boot
-  mainContent.style.display = "flex"; // show main page
+function showMain() {
+  bootScreen.style.display = "none";
+  mainContent.hidden = false;
 }
 
-// Start everything when page loads
-window.onload = startBootSequence;
+/* ================= TERMINAL CORE ================= */
 
+const terminal = document.getElementById("terminal");
+const rightPanel = document.getElementById("main-content-right");
 
+let history = [];
+let hIndex = 0;
+let currentDir = "home";
 
+const fs = {
+  home: ["projects", "calculator", "about"],
+  projects: ["Terminal Portfolio", "Mini Apps", "UI Experiments"]
+};
 
-
-
-// ---------- Terminal UI ----------
 function print(text = "") {
   const div = document.createElement("div");
   div.textContent = text;
@@ -66,73 +59,64 @@ function print(text = "") {
   terminal.scrollTop = terminal.scrollHeight;
 }
 
-function prompt() {
+function newPrompt() {
   const line = document.createElement("div");
-  const p = document.createElement("span");
-  p.textContent = `cd nags ${currentDir} $ `;
+  const label = document.createElement("span");
   const input = document.createElement("span");
+
+  label.textContent = `cd nags ${currentDir} $ `;
   input.contentEditable = true;
   input.className = "cmd";
   input.spellcheck = false;
 
-  line.append(p, input);
+  line.append(label, input);
   terminal.appendChild(line);
   input.focus();
 
-  input.addEventListener("keydown", e => handleKey(e, input));
+  input.addEventListener("keydown", e => handleInput(e, input));
 }
 
-function handleKey(e, input) {
+function handleInput(e, input) {
   if (e.key === "Enter") {
     e.preventDefault();
     const cmd = input.textContent.trim();
     history.push(cmd);
     hIndex = history.length;
     input.contentEditable = false;
-    execute(cmd);
+    runCommand(cmd);
+    return;
   }
 
   if (e.key === "ArrowUp" && hIndex > 0) {
-    hIndex--;
-    input.textContent = history[hIndex];
+    input.textContent = history[--hIndex];
   }
 
   if (e.key === "ArrowDown") {
-    hIndex++;
-    input.textContent = history[hIndex] || "";
+    input.textContent = history[++hIndex] || "";
   }
 }
 
-// ---------- Commands ----------
-function execute(cmd) {
+/* ================= COMMANDS ================= */
+
+function runCommand(cmd) {
   const [base, arg] = cmd.split(" ");
 
   switch (base) {
     case "help":
-    case "nags":
-    case "nags-h":
       print("Available commands:");
-      print("ls");
-      print("cd <folder>");
-      print("exit");
-      print("clear");
+      ["ls", "cd <folder>", "clear", "exit"].forEach(print);
       break;
 
     case "ls":
-      fs[currentDir]?.forEach(f => print(f));
+      fs[currentDir]?.forEach(print);
       break;
 
     case "cd":
-      if (!arg) break;
-      if (arg === "..") {
-        currentDir = "home";
-        clearRight();
-      } else if (fs[currentDir]?.includes(arg)) {
-        currentDir = arg;
-        openSection(arg);
-      } else {
-        print("No such directory");
-      }
+      changeDir(arg);
+      break;
+
+    case "clear":
+      terminal.innerHTML = "";
       break;
 
     case "exit":
@@ -140,20 +124,32 @@ function execute(cmd) {
       clearRight();
       break;
 
-    case "clear":
-      terminal.innerHTML = "";
-      break;
-
     default:
       print("Command not found");
   }
 
-  prompt();
+  newPrompt();
 }
 
+function changeDir(dir) {
+  if (!dir) return;
 
+  if (dir === "..") {
+    currentDir = "home";
+    clearRight();
+    return;
+  }
 
-// ---------- Right Panel ----------
+  if (fs[currentDir]?.includes(dir)) {
+    currentDir = dir;
+    openSection(dir);
+  } else {
+    print("No such directory");
+  }
+}
+
+/* ================= RIGHT PANEL ================= */
+
 function clearRight() {
   rightPanel.innerHTML = "";
 }
@@ -161,80 +157,64 @@ function clearRight() {
 function openSection(name) {
   clearRight();
 
-  if (name === "projects") {
-    projectMenu();
-    return;
-  }
+  if (name === "projects") return showProjects();
+  if (name === "calculator") return showCalculator();
+  if (name === "about") return showAbout();
 
-  if (name === "calculator") {
-    calculatorApp();
-    return;
-  }
+  rightPanel.innerHTML = `<h2>${name}</h2><p>Content coming soon.</p>`;
+}
 
-  if (name === "paint") {
-    paintApp();
-    return;
-  }
+/* ================= APPS ================= */
 
+function showProjects() {
   rightPanel.innerHTML = `
-    <h2>${name.toUpperCase()}</h2>
-    <p>Content managed by admin.</p>
+    <h2>Projects</h2>
+    <ul>
+      ${fs.projects.map(p => `<li>${p}</li>`).join("")}
+    </ul>
   `;
 }
 
-// ---------- Projects ----------
-function projectMenu() {
-  print("Select a project:");
-  fs.projects.forEach((p, i) => print(`${i + 1}. ${p}`));
-  print(`${fs.projects.length + 1}. Exit`);
-  print("Enter your choice:");
-
-  const input = document.createElement("input");
-  input.type = "number";
-  terminal.appendChild(input);
-  input.focus();
-
-  input.onkeydown = e => {
-    if (e.key === "Enter") {
-      const choice = Number(input.value);
-      input.remove();
-
-      if (choice >= 1 && choice <= fs.projects.length) {
-        openProject(fs.projects[choice - 1]);
-      } else {
-        print("Exit project menu");
-      }
-      prompt();
-    }
-  };
-}
-
-function openProject(name) {
-  rightPanel.innerHTML = `
-    <h2>${name}</h2>
-    <p>Project details here.</p>
-  `;
-}
-
-// ---------- Calculator ----------
-function calculatorApp() {
+function showCalculator() {
   rightPanel.innerHTML = `
     <h2>Calculator</h2>
-    <input id="calc-display" readonly>
+    <input id="calc-display" readonly />
     <div id="calc-buttons">
       ${"789/456*123-0.=+".split("").map(b =>
-        `<button onclick="calc('${b}')">${b}</button>`
+        `<button data-val="${b}">${b}</button>`
       ).join("")}
     </div>
   `;
+
+  rightPanel.querySelectorAll("button").forEach(btn => {
+    btn.onclick = () => calc(btn.dataset.val);
+  });
 }
 
-window.calc = function (v) {
-  const d = document.getElementById("calc-display");
-  if (v === "=") d.value = eval(d.value);
-  else d.value += v;
-};
+function showAbout() {
+  rightPanel.innerHTML = `
+    <h2>About Me</h2>
+    <p>Frontend Developer. UI focused. Terminal obsessed.</p>
+  `;
+}
 
-// ---------- Start Terminal ----------
-print("Type help to begin.");
-prompt();
+function calc(v) {
+  const d = document.getElementById("calc-display");
+  if (v === "=") {
+    try {
+      d.value = eval(d.value);
+    } catch {
+      d.value = "Error";
+    }
+  } else {
+    d.value += v;
+  }
+}
+
+/* ================= INIT ================= */
+
+window.addEventListener("load", () => {
+  startBoot();
+  print("Type help to begin.");
+  newPrompt();
+});

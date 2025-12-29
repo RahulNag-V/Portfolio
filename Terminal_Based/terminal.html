@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Rahul Nag V">
-    <link rel="icon.jpg" type="image/x-icon" href="favicon.ico">
-    <title>|| Portfolio-Terminal ||</title>
-    <link rel="stylesheet" href="terminal.css">
-</head> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Rahul Nag V" />
+
+  <title>Portfolio Terminal</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="terminal.css" />
+</head>
+
 <body>
-    
-    <!-- BOOT SCREEN (shows first) -->
-    <div id="boot-screen">
-        <!-- Pre tag keeps formatting like terminal -->
-        <pre id="boot-text"></pre>
-    </div>
 
-    <!-- MAIN CONTENT (hidden at start) -->
-    <div id="main-content-left">
-  <h1>
-    <span class="dim">>></span>
-    <span class="name">Welcome to my Interactive webTerminal....!</span>
-</h1>
-<p> For a list of available comment type - help </p>
-  <div class="terminal">
-</div>
+  <!-- Boot Screen -->
+  <section id="boot-screen">
+    <pre id="boot-text"></pre>
+  </section>
 
-</div>
+  <!-- Main Content -->
+  <main id="main-content" hidden>
 
-<div id="main-content-right">
+    <!-- Left Panel -->
+    <section id="main-content-left">
+      <h1>
+        <span class="dim">&gt;&gt;</span>
+        <span class="name">Welcome to my interactive web terminal</span>
+      </h1>
 
-</div>
+      <p class="hint">Type <code>help</code> to see available commands.</p>
 
+      <div id="terminal" class="terminal"></div>
+    </section>
 
-    <!-- Link external JS file -->
-    
+    <!-- Right Panel -->
+    <section id="main-content-right"></section>
 
-    <script src="terminal.js"></script>
+  </main>
+
+  <script src="terminal.js" defer></script>
 </body>
 </html>
