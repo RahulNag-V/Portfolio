@@ -254,8 +254,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 28px;
-        height: 28px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         border: 2px solid rgba(255, 255, 255, 0.9);
         pointer-events: none;
@@ -370,6 +370,9 @@
         const ry = (e.clientX / innerWidth - 0.5) * 20;
         scene.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
       });
+
+
+      
       document.addEventListener("mousemove", (e) => {
         const x = (e.clientX / innerWidth - 0.5) * 20;
         const y = (e.clientY / innerHeight - 0.5) * 20;
